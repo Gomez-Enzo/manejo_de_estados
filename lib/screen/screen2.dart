@@ -9,8 +9,42 @@ class Screen2 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Screen2'),
       ),
-      body: const Center(
-        child: Text('Screen2'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {},
+              child: const Text(
+                'Establecer Usuario',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {},
+              child: const Text(
+                'Cambiar Edad',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {},
+              child: const Text(
+                'Añadir Profesion',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
