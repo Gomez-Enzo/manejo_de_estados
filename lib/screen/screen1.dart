@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manejo_de_estados/cubit/usuario/usuario_cubit.dart';
 
 class Screen1 extends StatelessWidget {
   const Screen1({Key? key}) : super(key: key);
@@ -9,7 +11,18 @@ class Screen1 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Screen1'),
       ),
-      body: InformationUsuario(),
+      body: BlocBuilder<UsuarioCubit, UsuarioState>(
+        builder: (_, state) {
+          print(state);
+          if (state is UsuarioInitial) {
+            return const Center(
+              child: Text('No hay informacion del usuario'),
+            );
+          } else {
+            return InformationUsuario();
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, 'screen2'),
         child: const Icon(Icons.ac_unit_rounded),
