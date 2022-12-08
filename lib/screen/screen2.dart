@@ -36,7 +36,9 @@ class Screen2 extends StatelessWidget {
             ),
             MaterialButton(
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                context.read<UsuarioCubit>().cambiarEdad(20);
+              },
               child: const Text(
                 'Cambiar Edad',
                 style: TextStyle(color: Colors.white),
@@ -47,7 +49,11 @@ class Screen2 extends StatelessWidget {
             ),
             MaterialButton(
               color: Colors.blue,
-              onPressed: () {},
+              onPressed: () {
+                context
+                    .read<UsuarioCubit>()
+                    .agregarProfesion('Tecnico en electronica');
+              },
               child: const Text(
                 'Añadir Profesion',
                 style: TextStyle(color: Colors.white),

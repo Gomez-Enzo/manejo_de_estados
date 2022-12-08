@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manejo_de_estados/cubit/usuario/usuario_cubit.dart';
 
+import '../models/usuario.dart';
+
 class Screen1 extends StatelessWidget {
   const Screen1({Key? key}) : super(key: key);
 
@@ -10,16 +12,23 @@ class Screen1 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Screen1'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () => context.read<UsuarioCubit>().borrarUsuario(),
+          )
+        ],
       ),
       body: BlocBuilder<UsuarioCubit, UsuarioState>(
         builder: (_, state) {
-          print(state);
           if (state is UsuarioInitial) {
             return const Center(
               child: Text('No hay informacion del usuario'),
             );
+          } else if (state is UsuarioActivo) {
+            return InformationUsuario(usuario: state.usuario);
           } else {
-            return InformationUsuario();
+            return const Center(child: Text('Estado no reconocido'));
           }
         },
       ),
@@ -34,7 +43,9 @@ class Screen1 extends StatelessWidget {
 class InformationUsuario extends StatelessWidget {
   const InformationUsuario({
     Key? key,
+    required this.usuario,
   }) : super(key: key);
+  final Usuario usuario;
 
   @override
   Widget build(BuildContext context) {
@@ -43,34 +54,35 @@ class InformationUsuario extends StatelessWidget {
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
+        children: [
+          const Text(
             'General',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            title: Text('Nombre: '),
+            title: Text('Nombre: ${usuario.nombre}'),
           ),
           ListTile(
-            title: Text('Edad: '),
+            title: Text('Edad:  ${usuario.edad}'),
           ),
-          Text(
+          const Text(
             'Profesiones',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          ListTile(
-            title: Text('Profesion 1: '),
-          ),
-          ListTile(
-            title: Text('Profesion 2: '),
-          ),
+          ...usuario.profesiones!
+              .map(
+                (profesion) => ListTile(
+                  title: Text(profesion),
+                ),
+              )
+              .toList(),
         ],
       ),
     );
